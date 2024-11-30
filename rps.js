@@ -4,48 +4,44 @@ function getcomputerchoice (){
     let computer;
 
     if (randomnum <= 0.34) {
-        computer = "paper"
+        computer = "Paper"
     }
     else if (randomnum <= 0.67) {
-         computer = "rock"
+         computer = "Rock"
     }
     else{
-         computer = "scissor"
+         computer = "Scissor"
     }
     
-    console.log(computer)
     return computer
 }    
 
 
 // Generates a random number between 0 and 1, and assigns the choice.
 
+const btn1 = document.querySelector("#btn1");
+const btn2 = document.querySelector("#btn2");
+const btn3 = document.querySelector("#btn3");
+  
+ let rock = "Rock"
+ let paper = "Paper"
+ let scissor = "Scissor"
+ 
+  btn1.addEventListener("click", () => {
+      human = rock; playround (); roundname();
+    })
 
-function gethumanchoice(){
+    btn2.addEventListener("click", () => {
+        human = paper; playround (); roundname();
+      })
 
-var humanchoice = prompt("What do you choose ?")
+    btn3.addEventListener("click", () => {
+       human = scissor; playround (); roundname();
+      })
 
-var choice1 = "rock"; var choice2 = "paper"; var choice3 = "scissor"
 
-if (humanchoice.toLowerCase() == choice1.toLowerCase()){
-    var human = humanchoice.toLowerCase()
-}
-else if (humanchoice.toLowerCase() == choice2.toLowerCase()) {
-    var human = humanchoice.toLowerCase()
-}
-else if (humanchoice.toLowerCase() == choice3.toLowerCase()) {
-    var human = humanchoice.toLowerCase()
-}
-else {
-    console.log("Invalid input! refresh to try again")
-}
 
-console.log(human)
-return human;
-
-}
-
-// Record correct user input even while being case insensitive
+// Record user based on the button clicked on the webiste and executes the playround function
 
 var humanscore = 0;
 var computerscore = 0;
@@ -54,64 +50,95 @@ var computerscore = 0;
 
 
 
-
-
-
-
 function playround () {
 
-    let human =  gethumanchoice(); 
+let result = document.querySelector("#RoundResults")
+let humanpoint = document.querySelector("#playerscore")
+let computerpoint = document.querySelector("#computerscore")
+
+
     let computer = getcomputerchoice();
-    
 
 if ( computer ===  human){
-    console.log("Its a draw")
+    var resulttext = ("Computer chooses " + computer + " as well. Its a draw!");
+    result.textContent = resulttext;
 }
-else if ( computer === "rock" && human === "scissor" ) {
-    console.log ("rock beats scissor, Computer wins this round!"); computerscore++   
+else if ( computer === "Rock" && human === "Scissor" ) {
+    var resulttext = ("Rock beats Scissor, Computer wins this round!"); 
+    result.textContent = resulttext;
+    computerscore++;
+    computerpoint.textContent = computerscore; 
 }
-else if( computer === "paper" && human === "scissor"){
-    console.log("You Win!"); humanscore++
+else if( computer === "Paper" && human === "Scissor"){
+    var resulttext = ("Scissor beats Paper. You Win!"); 
+    result.textContent = resulttext;
+    humanscore++;
+    humanpoint.textContent = humanscore;
 }
-else if( computer === "rock" && human === "paper"){
-    console.log("You Win!"); humanscore++
+else if( computer === "Rock" && human === "Paper"){
+    var resulttext = ("Paper beats Rock. You Win!"); 
+    result.textContent = resulttext;
+    humanscore++;
+    humanpoint.textContent = humanscore;
 }
-else if( computer === "paper" && human === "rock"){
-    console.log("paper beats rock, Computer wins this round!"); computerscore++
+else if( computer === "Paper" && human === "Rock"){
+    var resulttext = ("Paper beats Rock, Computer wins this round!"); 
+    result.textContent = resulttext;
+    computerscore++;
+    computerpoint.textContent = computerscore; 
 }
-else if( computer === "scissor" && human === "rock"){
-    console.log("You Win!"); humanscore++
+else if( computer === "Scissor" && human === "Rock"){
+    var resulttext = ("Rock beats Scissor. You Win!"); 
+    result.textContent = resulttext;
+    humanscore++;
+    humanpoint.textContent = humanscore;
 }
-else if ( computer === "scissor" && human === "paper" ) {
-    console.log ("scissor beats paper, Computer wins this round!"); computerscore++   
+else if ( computer === "Scissor" && human === "Paper" ) {
+    var resulttext = ("Scissor beats Paper, Computer wins this round!"); 
+    result.textContent = resulttext;
+    computerscore++   ;
+    computerpoint.textContent = computerscore; 
 }
 else {
-    console.log("Something has gone wrong")
+    var resulttext = ("Something has gone wrong");
+    result.textContent = resulttext;
 }
 }
 
-// Compares both human and computer's choices and decides the winner.
+// Compares both human and computer's choices, decides the winner and shows it on screen.
 
 
-function playGame() {
-    for (let i = 1; i <= 5; i++) {
-        console.log(`Round ${i}`);
-        playround(); // Call the playround function for each round
-        console.log(`Scores after Round ${i}: Human - ${humanscore}, Computer - ${computerscore}`);
-    }
-    if(computerscore > humanscore){
-        console.log("Computer wins the game by : " + computerscore + " - " + humanscore )
-        console.log("Reload the page to play again!")
-    }
-    else if( humanscore > computerscore){
-        console.log("You win the game by : " + humanscore + " - " + computerscore )
-        console.log("Reload the page to play again!")
-    }
-    else {
-        console.log("It's a draw : " + humanscore + " - " + computerscore )
-        console.log("Reload the page to play again!")
-    }
+
+let heading = document.querySelector("#main")
+let rounds = document.querySelector("#round")
+let i = 1
+
+
+function roundname() {
+   i++;
+   rounds.innerHTML = "Round " + i;
+   rounds.style.fontWeight = "bold"
+
+   if(i == 6 && computerscore > humanscore){
+    heading.textContent = ("Computer wins the game by : " + computerscore + " - " + humanscore )
+     }
+   else if(i == 6 &&  humanscore > computerscore){
+    heading.textContent = ("You win the game by : " + humanscore + " - " + computerscore )
+     }
+   else if (i == 6 && humanscore === computerscore){
+    heading.textContent = ("It's a draw : " + humanscore + " - " + computerscore )
+     }
+
+     if( i > 5){
+        rounds.innerHTML =  "Game Over";
+        rounds.style.fontWeight = "bold"
+     }
+
+     if( i > 6){
+        alert("Refresh to begin a new game")
+     }
+
 }
-// Added 5 rounds to the game and a winner declare conditional
 
-playGame()
+// added rounds record mechanism using increment after every button click.
+// And condition to announce winner after Round 5 and start a new game
